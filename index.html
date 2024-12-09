@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BarberPNJ</title>
+    <link rel="shortcut icon" href="https://logowik.com/content/uploads/images/modern-barber-shop3653.logowik.com.webp" type="image/x-icon">
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            background-color: #f8f9fa;
+            font-family: 'Poppins', sans-serif;
+        }
+        .content-wrapper {
+            flex: 1 0 auto;
+        }
+        footer {
+            flex-shrink: 0;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        .hero {
+            background-image: url('https://www.barbertopiacorp.com/wp-content/uploads/2023/11/franchise-barbershop-scaled.webp');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .social-icon {
+            font-size: 1.5rem;
+            margin: 0 10px;
+            color: white;
+            transition: color 0.3s ease;
+        }
+        .social-icon:hover {
+            color: #007bff;
+        }
+        .hero h1 {
+            font-weight: 700;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
+        }
+        .hero p {
+            font-weight: 500;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="spinner"></div>
+    </div>
+
+    <div class="content-wrapper">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#"><i class="bi bi-scissors"></i> BarberPNJ</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#services">Services</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#booking">Booking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="logoutLink" style="display: none;">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Login/Register Section -->
+        <div class="container mt-5" id="loginRegisterSection">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card fade-in">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">Login or Register</h5>
+                            <div id="loginForm">
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="username" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="password" required>
+                                </div>
+                                <button class="btn btn-primary w-100 mb-2" onclick="login()">Login</button>
+                                <button class="btn btn-secondary w-100" onclick="showRegisterForm()">Register</button>
+                            </div>
+                            <div id="registerForm" style="display: none;">
+                                <div class="mb-3">
+                                    <label for="newUsername" class="form-label">New Username</label>
+                                    <input type="text" class="form-control" id="newUsername" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newPassword" class="form-label">New Password</label>
+                                    <input type="password" class="form-control" id="newPassword" required>
+                                </div>
+                                <button class="btn btn-primary w-100 mb-2" onclick="register()">Register</button>
+                                <button class="btn btn-secondary w-100" onclick="showLoginForm()">Back to Login</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Home Section (visible after login) -->
+        <div id="homeSection" style="display: none;">
+            <!-- Hero Section -->
+            <section class="hero py-5 mb-4 fade-in">
+                <div class="container text-center py-5">
+                    <h1 class="display-4">Welcome to BarberPNJ</h1>
+                    <p class="lead">Experience the best haircuts and styling services in town</p>
+                    <a href="#booking" class="btn btn-primary btn-lg">Book Now</a>
+                </div>
+            </section>
+
+            <!-- Services Section -->
+            <section id="services" class="py-5 fade-in">
+                <div class="container">
+                    <h2 class="text-center mb-4">Our Services</h2>
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="bi bi-scissors me-2"></i>Potong Rambut</h5>
+                                    <p class="card-text">Professional haircut tailored to your style.</p>
+                                    <p class="card-text"><strong>Price: Rp. 20.000</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="bi bi-brush me-2"></i>Styling</h5>
+                                    <p class="card-text">Get the perfect look with our styling service.</p>
+                                    <p class="card-text"><strong>Price: Rp. 15.000</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="bi bi-droplet me-2"></i>Cuci Rambut</h5>
+                                    <p class="card-text">Refresh your hair with our washing service.</p>
+                                    <p class="card-text"><strong>Price: Rp. 10.000</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Booking Section -->
+            <section id="booking" class="py-5 bg-light fade-in">
+                <div class="container">
+                    <h2 class="text-center mb-4">Book a Service</h2>
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label for="service" class="form-label">Select Service</label>
+                                        <select class="form-select" id="service">
+                                            <option value="1">Potong Rambut (Rp. 20.000)</option>
+                                            <option value="2">Styling (Rp. 15.000)</option>
+                                            <option value="3">Cuci Rambut (Rp. 10.000)</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="time" class="form-label">Select Time (09:00 - 20:00)</label>
+                                        <input type="time" class="form-control" id="time" min="09:00" max="20:00" required>
+                                    </div>
+                                    <button class="btn btn-primary w-100" onclick="book()">Book Now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5>Contact Us</h5>
+                    <p>Customer Service: 0883-2343-2343</p>
+                    <p>Location: Politeknik Negeri Jakarta</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Follow Us</h5>
+                    <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="social-icon"><i class="bi bi-tiktok"></i></a>
+                    <a href="#" class="social-icon"><i class="bi bi-twitter"></i></a>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Location</h5>
+                    <div id="map" style="height: 200px;"></div>
+                </div>
+            </div>
+            <hr>
+            <p class="text-center mb-0">&copy; 2024 BarberPNJ. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+    <script>
+        // Simulated user database
+        const users = {};
+        let currentUser = '';
+
+        // Loading screen
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loading-screen').style.display = 'none';
+            }, 2000);
+        });
+
+        function showRegisterForm() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+        }
+
+        function showLoginForm() {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('registerForm').style.display = 'none';
+        }
+
+        function register() {
+            const username = document.getElementById('newUsername').value;
+            const password = document.getElementById('newPassword').value;
+            if (username && password) {
+                if (users[username]) {
+                    alert('Username already exists. Please choose another one.');
+                } else {
+                    users[username] = password;
+                    alert('Registration successful! You can now login.');
+                    showLoginForm();
+                }
+            } else {
+                alert('Please fill in all fields.');
+            }
+        }
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            if (users[username] && users[username] === password) {
+                currentUser = username;
+                alert('Login successful!');
+                document.getElementById('loginRegisterSection').style.display = 'none';
+                document.getElementById('homeSection').style.display = 'block';
+                document.getElementById('logoutLink').style.display = 'block';
+            } else {
+                alert('Invalid username or password.');
+            }
+        }
+
+        function book() {
+            if (!currentUser) {
+                alert('Please login first.');
+                return;
+            }
+            const service = document.getElementById('service').value;
+            const time = document.getElementById('time').value;
+            if (service && time) {
+                let serviceName, price;
+                switch (service) {
+                    case '1': serviceName = 'Potong Rambut'; price = 20000; break;
+                    case '2': serviceName = 'Styling'; price = 15000; break;
+                    case '3': serviceName = 'Cuci Rambut'; price = 10000; break;
+                }
+                if (confirm(`Confirm booking for ${serviceName} at ${time}?`)) {
+                    alert(`Booking successful!\nService: ${serviceName}\nTime: ${time}\nPrice: Rp. ${price}\nPlease proceed with the payment.`);
+                }
+            } else {
+                alert('Please select a service and time.');
+            }
+        }
+
+        // Logout functionality
+        document.getElementById('logoutLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            currentUser = '';
+            document.getElementById('loginRegisterSection').style.display = 'flex';
+            document.getElementById('homeSection').style.display = 'none';
+            document.getElementById('logoutLink').style.display = 'none';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        });
+
+        // Google Maps initialization
+        function initMap() {
+            const pnj = { lat: -6.3709, lng: 106.8239 }; // Coordinates for Politeknik Negeri Jakarta
+            const map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 15,
+                center: pnj,
+            });
+            const marker = new google.maps.Marker({
+                position: pnj,
+                map: map,
+                title: 'Politeknik Negeri Jakarta'
+            });
+        }
+    </script>
+</body>
+</html>
+
