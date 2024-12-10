@@ -5,40 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BarberPNJ</title>
     <link rel="shortcut icon" href="https://logowik.com/content/uploads/images/modern-barber-shop3653.logowik.com.webp" type="image/x-icon">
-    <!-- Bootstrap CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Google Fonts: Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        html, body {
-            height: 100%;
-        }
         body {
-            display: flex;
-            flex-direction: column;
-            background-color: #f8f9fa;
             font-family: 'Poppins', sans-serif;
-        }
-        .content-wrapper {
-            flex: 1 0 auto;
-        }
-        footer {
-            flex-shrink: 0;
-        }
-        .card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-        }
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
+            background-color: #f8f9fa;
         }
         .hero {
             background-image: url('https://www.barbertopiacorp.com/wp-content/uploads/2023/11/franchise-barbershop-scaled.webp');
@@ -47,36 +21,10 @@
             color: white;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
         }
-        #loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #3498db;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .fade-in {
-            animation: fadeIn 0.5s;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         .social-icon {
             font-size: 1.5rem;
@@ -87,165 +35,270 @@
         .social-icon:hover {
             color: #007bff;
         }
-        .hero h1 {
-            font-weight: 700;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
-        }
-        .hero p {
-            font-weight: 500;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
-        }
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div id="loading-screen">
-        <div class="spinner"></div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="bi bi-scissors"></i> BarberPNJ</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#booking">Booking</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="logoutLink" style="display: none;">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="loginRegisterSection" class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Login or Register</h5>
+                        <div id="loginForm">
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="username" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" required>
+                            </div>
+                            <button class="btn btn-primary w-100 mb-2" onclick="login()">Login</button>
+                            <button class="btn btn-secondary w-100" onclick="showRegisterForm()">Register</button>
+                        </div>
+                        <div id="registerForm" style="display: none;">
+                            <div class="mb-3">
+                                <label for="newUsername" class="form-label">New Username</label>
+                                <input type="text" class="form-control" id="newUsername" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="newPassword" class="form-label">New Password</label>
+                                <input type="password" class="form-control" id="newPassword" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="address" class="form-label">Address</label>
+                                <input type="text" class="form-control" id="address" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" id="phone" required>
+                            </div>
+                            <button class="btn btn-primary w-100 mb-2" onclick="register()">Register</button>
+                            <button class="btn btn-secondary w-100" onclick="showLoginForm()">Back to Login</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="content-wrapper">
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div id="userSection" style="display: none;">
+        <section class="hero py-5 mb-4">
+            <div class="container text-center py-5">
+                <h1 class="display-4">Welcome to BarberPNJ</h1>
+                <p class="lead">Experience the best haircuts and styling services in town</p>
+                <a href="#booking" class="btn btn-primary btn-lg">Book Now</a>
+            </div>
+        </section>
+
+        <section id="services" class="py-5">
             <div class="container">
-                <a class="navbar-brand" href="#"><i class="bi bi-scissors"></i> BarberPNJ</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#home">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#services">Services</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#booking">Booking</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" id="logoutLink" style="display: none;">Logout</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <!-- Login/Register Section -->
-        <div class="container mt-5" id="loginRegisterSection">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="card fade-in">
-                        <div class="card-body">
-                            <h5 class="card-title mb-4">Login or Register</h5>
-                            <div id="loginForm">
-                                <div class="mb-3">
-                                    <label for="username" class="form-label">Username</label>
-                                    <input type="text" class="form-control" id="username" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="password" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="password" required>
-                                </div>
-                                <button class="btn btn-primary w-100 mb-2" onclick="login()">Login</button>
-                                <button class="btn btn-secondary w-100" onclick="showRegisterForm()">Register</button>
+                <h2 class="text-center mb-4">Our Services</h2>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="bi bi-scissors me-2"></i>Potong Rambut</h5>
+                                <p class="card-text">Professional haircut tailored to your style.</p>
+                                <p class="card-text"><strong>Price: Rp. 20.000</strong></p>
                             </div>
-                            <div id="registerForm" style="display: none;">
-                                <div class="mb-3">
-                                    <label for="newUsername" class="form-label">New Username</label>
-                                    <input type="text" class="form-control" id="newUsername" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="newPassword" class="form-label">New Password</label>
-                                    <input type="password" class="form-control" id="newPassword" required>
-                                </div>
-                                <button class="btn btn-primary w-100 mb-2" onclick="register()">Register</button>
-                                <button class="btn btn-secondary w-100" onclick="showLoginForm()">Back to Login</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="bi bi-brush me-2"></i>Styling</h5>
+                                <p class="card-text">Get the perfect look with our styling service.</p>
+                                <p class="card-text"><strong>Price: Rp. 15.000</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="bi bi-droplet me-2"></i>Cuci Rambut</h5>
+                                <p class="card-text">Refresh your hair with our washing service.</p>
+                                <p class="card-text"><strong>Price: Rp. 10.000</strong></p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Home Section (visible after login) -->
-        <div id="homeSection" style="display: none;">
-            <!-- Hero Section -->
-            <section class="hero py-5 mb-4 fade-in">
-                <div class="container text-center py-5">
-                    <h1 class="display-4">Welcome to BarberPNJ</h1>
-                    <p class="lead">Experience the best haircuts and styling services in town</p>
-                    <a href="#booking" class="btn btn-primary btn-lg">Book Now</a>
-                </div>
-            </section>
-
-            <!-- Services Section -->
-            <section id="services" class="py-5 fade-in">
-                <div class="container">
-                    <h2 class="text-center mb-4">Our Services</h2>
-                    <div class="row">
-                        <div class="col-md-4 mb-4">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <h5 class="card-title"><i class="bi bi-scissors me-2"></i>Potong Rambut</h5>
-                                    <p class="card-text">Professional haircut tailored to your style.</p>
-                                    <p class="card-text"><strong>Price: Rp. 20.000</strong></p>
+        <section id="booking" class="py-5 bg-light">
+            <div class="container">
+                <h2 class="text-center mb-4">Book a Service</h2>
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="service" class="form-label">Select Service</label>
+                                    <select class="form-select" id="service">
+                                        <option value="1">Potong Rambut (Rp. 20.000)</option>
+                                        <option value="2">Styling (Rp. 15.000)</option>
+                                        <option value="3">Cuci Rambut (Rp. 10.000)</option>
+                                    </select>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-4">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <h5 class="card-title"><i class="bi bi-brush me-2"></i>Styling</h5>
-                                    <p class="card-text">Get the perfect look with our styling service.</p>
-                                    <p class="card-text"><strong>Price: Rp. 15.000</strong></p>
+                                <div class="mb-3">
+                                    <label for="time" class="form-label">Select Time (09:00 - 20:00)</label>
+                                    <input type="time" class="form-control" id="time" min="09:00" max="20:00" required>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-4">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <h5 class="card-title"><i class="bi bi-droplet me-2"></i>Cuci Rambut</h5>
-                                    <p class="card-text">Refresh your hair with our washing service.</p>
-                                    <p class="card-text"><strong>Price: Rp. 10.000</strong></p>
-                                </div>
+                                <button class="btn btn-primary w-100" onclick="book()">Book Now</button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <!-- Booking Section -->
-            <section id="booking" class="py-5 bg-light fade-in">
-                <div class="container">
-                    <h2 class="text-center mb-4">Book a Service</h2>
-                    <div class="row justify-content-center">
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="mb-3">
-                                        <label for="service" class="form-label">Select Service</label>
-                                        <select class="form-select" id="service">
-                                            <option value="1">Potong Rambut (Rp. 20.000)</option>
-                                            <option value="2">Styling (Rp. 15.000)</option>
-                                            <option value="3">Cuci Rambut (Rp. 10.000)</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="time" class="form-label">Select Time (09:00 - 20:00)</label>
-                                        <input type="time" class="form-control" id="time" min="09:00" max="20:00" required>
-                                    </div>
-                                    <button class="btn btn-primary w-100" onclick="book()">Book Now</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <section id="userBookings" class="py-5">
+            <div class="container">
+                <h2 class="text-center mb-4">Your Bookings</h2>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Service</th>
+                                <th>Time</th>
+                                <th>Status</th>
+                                <th>Payment Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userBookingsTableBody">
+                            <!-- User bookings will be inserted here -->
+                        </tbody>
+                    </table>
                 </div>
-            </section>
+            </div>
+        </section>
+    </div>
+
+    <div id="adminSection" style="display: none;">
+        <div class="container mt-5">
+            <h2 class="text-center mb-4">Admin Dashboard</h2>
+            <ul class="nav nav-tabs" id="adminTabs">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#" onclick="showAdminContent('bookings')">Bookings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="showAdminContent('customers')">Customers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="showAdminContent('reports')">Reports</a>
+                </li>
+            </ul>
+            <div id="adminContent" class="mt-4">
+                <div id="bookingsContent">
+                    <h3>All Bookings</h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>User</th>
+                                <th>Service</th>
+                                <th>Time</th>
+                                <th>Status</th>
+                                <th>Payment Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingsTableBody">
+                            <!-- Bookings will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="customersContent" style="display: none;">
+                    <h3>Customer List</h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Address</th>
+                                <th>Phone</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customersTableBody">
+                            <!-- Customers will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="reportsContent" style="display: none;">
+                    <h3>Reports</h3>
+                    <p>This section is under development.</p>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white py-4">
+    <!-- Payment Modal -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="paymentModalLabel">Payment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="paymentForm">
+                        <input type="hidden" id="paymentBookingId">
+                        <div class="mb-3">
+                            <label class="form-label">Payment Method</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="cashPayment" value="cash" checked>
+                                <label class="form-check-label" for="cashPayment">
+                                    Cash
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="qrisPayment" value="qris">
+                                <label class="form-check-label" for="qrisPayment">
+                                    QRIS
+                                </label>
+                            </div>
+                        </div>
+                        <div id="qrisDetails" style="display: none;">
+                            <p>Scan the QR code below to pay:</p>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" alt="QRIS QR Code" style="width: 200px; height: 200px;">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="confirmPayment()">Confirm Payment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white py-4 mt-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-4 mb-3">
@@ -270,21 +323,20 @@
         </div>
     </footer>
 
-    <!-- Bootstrap JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Google Maps API -->
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
     <script>
         // Simulated user database
-        const users = {};
+        const users = {
+            'admin': { password: 'admin123', isAdmin: true },
+            'user': { password: 'user123', isAdmin: false, address: 'Jakarta', phone: '08123456789' }
+        };
         let currentUser = '';
 
-        // Loading screen
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                document.getElementById('loading-screen').style.display = 'none';
-            }, 2000);
-        });
+        // Simulated booking database
+        let bookings = [
+            { id: 1, user: 'user', service: 'Potong Rambut', time: '10:00', status: 'Confirmed', paymentStatus: 'Unpaid' }
+        ];
 
         function showRegisterForm() {
             document.getElementById('loginForm').style.display = 'none';
@@ -299,11 +351,13 @@
         function register() {
             const username = document.getElementById('newUsername').value;
             const password = document.getElementById('newPassword').value;
-            if (username && password) {
+            const address = document.getElementById('address').value;
+            const phone = document.getElementById('phone').value;
+            if (username && password && address && phone) {
                 if (users[username]) {
                     alert('Username already exists. Please choose another one.');
                 } else {
-                    users[username] = password;
+                    users[username] = { password, isAdmin: false, address, phone };
                     alert('Registration successful! You can now login.');
                     showLoginForm();
                 }
@@ -315,12 +369,18 @@
         function login() {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-            if (users[username] && users[username] === password) {
+            if (users[username] && users[username].password === password) {
                 currentUser = username;
                 alert('Login successful!');
                 document.getElementById('loginRegisterSection').style.display = 'none';
-                document.getElementById('homeSection').style.display = 'block';
                 document.getElementById('logoutLink').style.display = 'block';
+                if (users[username].isAdmin) {
+                    document.getElementById('adminSection').style.display = 'block';
+                    loadAdminData();
+                } else {
+                    document.getElementById('userSection').style.display = 'block';
+                    loadUserBookings();
+                }
             } else {
                 alert('Invalid username or password.');
             }
@@ -341,10 +401,141 @@
                     case '3': serviceName = 'Cuci Rambut'; price = 10000; break;
                 }
                 if (confirm(`Confirm booking for ${serviceName} at ${time}?`)) {
+                    const newBooking = { 
+                        id: bookings.length + 1, 
+                        user: currentUser, 
+                        service: serviceName, 
+                        time, 
+                        status: 'Pending',
+                        paymentStatus: 'Unpaid'
+                    };
+                    bookings.push(newBooking);
                     alert(`Booking successful!\nService: ${serviceName}\nTime: ${time}\nPrice: Rp. ${price}\nPlease proceed with the payment.`);
+                    if (users[currentUser].isAdmin) {
+                        loadAdminData();
+                    } else {
+                        loadUserBookings();
+                    }
                 }
             } else {
                 alert('Please select a service and time.');
+            }
+        }
+
+        function loadUserBookings() {
+            const userBookingsTableBody = document.getElementById('userBookingsTableBody');
+            userBookingsTableBody.innerHTML = '';
+            bookings.filter(booking => booking.user === currentUser).forEach(booking => {
+                const row = `<tr>
+                    <td>${booking.service}</td>
+                    <td>${booking.time}</td>
+                    <td>${booking.status}</td>
+                    <td>${booking.paymentStatus}</td>
+                    <td>
+                        ${booking.paymentStatus === 'Unpaid' 
+                            ? `<button class="btn btn-sm btn-primary" onclick="showPaymentModal(${booking.id})">Pay</button>` 
+                            : '-'}
+                    </td>
+                </tr>`;
+                userBookingsTableBody.innerHTML += row;
+            });
+        }
+
+        function showPaymentModal(bookingId) {
+            document.getElementById('paymentBookingId').value = bookingId;
+            const paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
+            paymentModal.show();
+        }
+
+        function confirmPayment() {
+            const bookingId = parseInt(document.getElementById('paymentBookingId').value);
+            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+            
+            const bookingIndex = bookings.findIndex(b => b.id === bookingId);
+            if (bookingIndex !== -1) {
+                bookings[bookingIndex].paymentStatus = 'Paid';
+                bookings[bookingIndex].status = 'Confirmed';
+                alert(`Payment confirmed for booking #${bookingId} using ${paymentMethod.toUpperCase()}.`);
+                loadUserBookings();
+                bootstrap.Modal.getInstance(document.getElementById('paymentModal')).hide();
+            } else {
+                alert('Booking not found.');
+            }
+        }
+
+        // Add event listener for payment method change
+        document.querySelectorAll('input[name="paymentMethod"]').forEach(input => {
+            input.addEventListener('change', function() {
+                document.getElementById('qrisDetails').style.display = this.value === 'qris' ? 'block' : 'none';
+            });
+        });
+
+        function loadAdminData() {
+            const bookingsTableBody = document.getElementById('bookingsTableBody');
+            const customersTableBody = document.getElementById('customersTableBody');
+            
+            // Load bookings
+            bookingsTableBody.innerHTML = '';
+            bookings.forEach(booking => {
+                const row = `<tr>
+                    <td>${booking.id}</td>
+                    <td>${booking.user}</td>
+                    <td>${booking.service}</td>
+                    <td>${booking.time}</td>
+                    <td>${booking.status}</td>
+                    <td>${booking.paymentStatus}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" onclick="editBooking(${booking.id})">Edit</button>
+                        <button class="btn btn-sm btn-danger" onclick="deleteBooking(${booking.id})">Delete</button>
+                    </td>
+                </tr>`;
+                bookingsTableBody.innerHTML += row;
+            });
+            
+            // Load customers
+            customersTableBody.innerHTML = '';
+            Object.entries(users).forEach(([username, userData]) => {
+                if (!userData.isAdmin) {
+                    const row = `<tr>
+                        <td>${username}</td>
+                        <td>${userData.address}</td>
+                        <td>${userData.phone}</td>
+                    </tr>`;
+                    customersTableBody.innerHTML += row;
+                }
+            });
+        }
+
+        function showAdminContent(section) {
+            document.getElementById('bookingsContent').style.display = 'none';
+            document.getElementById('customersContent').style.display = 'none';
+            document.getElementById('reportsContent').style.display = 'none';
+            document.getElementById(`${section}Content`).style.display = 'block';
+
+            // Update active tab
+            document.querySelectorAll('#adminTabs .nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.querySelector(`#adminTabs .nav-link[onclick="showAdminContent('${section}')"]`).classList.add('active');
+        }
+
+        function editBooking(bookingId) {
+            const booking = bookings.find(b => b.id === bookingId);
+            if (booking) {
+                const newStatus = prompt("Enter new status (Pending/Confirmed/Cancelled):", booking.status);
+                if (newStatus && ['Pending', 'Confirmed', 'Cancelled'].includes(newStatus)) {
+                    booking.status = newStatus;
+                    loadAdminData();
+                } else {
+                    alert("Invalid status. No changes made.");
+                }
+            }
+        }
+
+        function deleteBooking(bookingId) {
+            if (confirm("Are you sure you want to delete this booking?")) {
+                bookings = bookings.filter(b => b.id !== bookingId);
+                loadAdminData();
             }
         }
 
@@ -352,8 +543,9 @@
         document.getElementById('logoutLink').addEventListener('click', function(e) {
             e.preventDefault();
             currentUser = '';
-            document.getElementById('loginRegisterSection').style.display = 'flex';
-            document.getElementById('homeSection').style.display = 'none';
+            document.getElementById('loginRegisterSection').style.display = 'block';
+            document.getElementById('userSection').style.display = 'none';
+            document.getElementById('adminSection').style.display = 'none';
             document.getElementById('logoutLink').style.display = 'none';
             document.getElementById('username').value = '';
             document.getElementById('password').value = '';
@@ -375,4 +567,3 @@
     </script>
 </body>
 </html>
-
